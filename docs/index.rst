@@ -44,7 +44,7 @@ The code below will connect the built-in Django ``post_save`` signal to
 .. code-block:: python
 
     from myapp.models import Article
-    from rohypnol import rohypnol
+    from rohypnol.register import rohypnol
 
     rohypnol.register(Article, 'article_list')
 
@@ -53,7 +53,7 @@ In your `urls.py` file:
 
 .. code-block:: python
 
-    from rohypnol import connect_all_signals
+    from rohypnol.register import connect_all_signals
 
     urlpatterns = ...
 
