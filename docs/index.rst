@@ -13,9 +13,11 @@ deletion.
 Requirements
 ------------
 
-======  ======
-Django  >= 1.5
-======  ======
+========  ======
+Python 2  > 2.7
+Python 3  >= 3.2
+Django    >= 1.6
+========  ======
 
 
 Installation

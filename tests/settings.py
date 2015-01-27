@@ -1,7 +1,7 @@
 from os.path import abspath, join, dirname
 PROJECT_ROOT = abspath(dirname(__file__))
 REPOSITORY_ROOT = abspath(join(PROJECT_ROOT, '..'))
-CACHE_ROOT = abspath(join(REPOSITORY_ROOT, 'cache'))
+CACHE_ROOT = abspath(join(REPOSITORY_ROOT, '.cache'))
 
 DATABASES = {
     'default': {

@@ -1,8 +1,9 @@
 from django.conf import settings
+from django.core.cache import cache
 from django.db.models.base import ModelBase
 from django.db.models.signals import post_save
 from django.dispatch import Signal
-from django.core.cache import cache
+from django.utils import six
 
 
 class RohypnolRegister(object):
@@ -61,14 +62,14 @@ class RohypnolRegister(object):
             signals = [signals]
         for signal in signals:
             if settings.DEBUG:
-                err = "%s is not a valid Signal subclass." % signal
+                err = "{} is not a valid Signal subclass.".format(signal)
                 assert isinstance(signal, Signal), err
             self._registry.setdefault(signal, {})
             if not isinstance(models, (list, tuple)):
                 models = [models]
             for model in models:
                 if settings.DEBUG:
-                    err = "%s is not a valid ModelBase subclass." % model
+                    err = "{} is not a valid ModelBase subclass.".format(model)
                     assert isinstance(model, ModelBase), err
                 self._registry.get(signal).setdefault(model, set())
                 if not isinstance(keys, (list, tuple)):
@@ -80,8 +81,8 @@ class RohypnolRegister(object):
         """
         Connects all current registered signals to the cache delete function.
         """
-        for signal, models in self._registry.iteritems():
-            for model, keys in models.iteritems():
+        for signal, models in six.iteritems(self._registry):
+            for model, keys in six.iteritems(models):
                 # Local function the current signal is going to be
                 # connected to.
                 # Defining it dynamically allows us to pass in the current
@@ -96,8 +97,8 @@ class RohypnolRegister(object):
         Disconnects all current registered signals.
         To reconnect, signals must be registered again.
         """
-        for signal, models in self._registry.iteritems():
-            for model, keys in models.iteritems():
+        for signal, models in six.iteritems(self._registry):
+            for model, keys in six.iteritems(models):
                 signal.disconnect(sender=model, weak=False, dispatch_uid=signal)
         self._registry = {}
 
