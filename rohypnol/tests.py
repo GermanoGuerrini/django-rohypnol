@@ -1,4 +1,5 @@
-from django.utils import unittest
+import unittest
+
 from django.test.utils import override_settings
 from django.db import models
 from django.dispatch import Signal
@@ -16,7 +17,7 @@ class RegisterTest(unittest.TestCase):
 
     def test_register(self):
         r = RohypnolRegister()
-        
+
         r.register(MockModelA, 'k0', mock_signal_0)
         self.assertEqual(r._registry, {
             mock_signal_0: {MockModelA: set(['k0'])}
